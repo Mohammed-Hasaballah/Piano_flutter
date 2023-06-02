@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print, dead_code
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_midi/flutter_midi.dart';
@@ -48,7 +46,6 @@ class _PianoAppState extends State<PianoApp> {
           title: const Text('Music App'),
           actions: [
             DropdownButton<String>(
-              // style: const TextStyle(color: Colors.black),
               dropdownColor: Colors.black,
               value: _selectedFile,
               onChanged: (String? newValue) {
@@ -92,8 +89,6 @@ class _PianoAppState extends State<PianoApp> {
     if (kIsWeb) {
       // Play sound for web
     } else {
-      int midi = position.note.index + position.octave * 12;
-      // int midiNote = position.note.midiValue + (position.octave + 1) * 12;
       int midiNote = _calculateMidiNoteValue(position.note, position.octave);
       _flutterMidi.playMidiNote(midi: midiNote);
     }
