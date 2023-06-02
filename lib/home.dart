@@ -20,6 +20,7 @@ class _PianoAppState extends State<PianoApp> {
     'Piano': 'assets/Piano.sf2',
     'Yamaha Grand Lite': 'assets/Yamaha-Grand-Lite-SF-v1.1.sf2',
     'XDrum Piano': 'assets/XDrum_Piano.sf2',
+    'Flute': 'assets/Flute.sf2'
   };
 
   @override
@@ -92,7 +93,21 @@ class _PianoAppState extends State<PianoApp> {
       // Play sound for web
     } else {
       int midi = position.note.index + position.octave * 12;
-      _flutterMidi.playMidiNote(midi: midi);
+      // int midiNote = position.note.midiValue + (position.octave + 1) * 12;
+      int midiNote = _calculateMidiNoteValue(position.note, position.octave);
+      _flutterMidi.playMidiNote(midi: midiNote);
     }
+  }
+
+  int _calculateMidiNoteValue(Note note, int octave) {
+    // C0 is MIDI note number 12
+    int midiBase = 12;
+
+    // Each octave has 12 notes
+    int notesPerOctave = 12;
+
+    // Calculate the MIDI note value for the given note and octave
+    int midiNote = midiBase + octave * notesPerOctave + note.index;
+    return midiNote;
   }
 }
