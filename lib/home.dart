@@ -74,35 +74,16 @@ class _PianoAppState extends State<PianoApp> {
             accidentalColor: Colors.black,
             keyWidth: 40,
             noteRange: NoteRange.forClefs([
+              Clef.Bass,
+              Clef.Alto,
               Clef.Treble,
             ]),
             onNotePositionTapped: (position) {
-              _play(position);
+              _flutterMidi.playMidiNote(midi: position.pitch);
             },
           ),
         ),
       ),
     );
-  }
-
-  void _play(NotePosition position) {
-    if (kIsWeb) {
-      // Play sound for web
-    } else {
-      int midiNote = _calculateMidiNoteValue(position.note, position.octave);
-      _flutterMidi.playMidiNote(midi: midiNote);
-    }
-  }
-
-  int _calculateMidiNoteValue(Note note, int octave) {
-    // C0 is MIDI note number 12
-    int midiBase = 12;
-
-    // Each octave has 12 notes
-    int notesPerOctave = 12;
-
-    // Calculate the MIDI note value for the given note and octave
-    int midiNote = midiBase + octave * notesPerOctave + note.index;
-    return midiNote;
   }
 }
